@@ -45,7 +45,9 @@ int main(int argc, char **argv) {
 
   Mat frame;
   //--- INITIALIZE VIDEOCAPTURE
-  VideoCapture cap;
+  string pipeline ="libcamerasrc ! video/x-raw, format=NV12, width=640, height=480, framerate=24/1! ""videoconvert ! video/x-raw, format=BGR ! appsink";
+  VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
+
   // open the default camera using default API
   // cap.open(0);
   // OR advance usage: select any API backend
@@ -61,6 +63,7 @@ int main(int argc, char **argv) {
 
   //--- GRAB AND WRITE LOOP
   cout << "Start grabbing" << endl << "Press any key to terminate" << endl;
+ 
   for (;;) {
     // wait for a new frame from camera and store it into 'frame'
     cap.read(frame);
@@ -78,10 +81,10 @@ int main(int argc, char **argv) {
 
     CannyThreshold(0, 0);
     // show live and wait for a key with timeout long enough to show images
+
     imshow("Live", dst);
     createTrackbar("Min Threshold:", "Live", &lowThreshold, max_lowThreshold,
                    0);
-
     if (waitKey(5) >= 0)
       break;
   }

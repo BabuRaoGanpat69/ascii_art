@@ -1,5 +1,5 @@
 #to set version##
-cmake_minimum_required(VERSION 3.31.6)
+cmake_minimum_required(VERSION 4.3.1)
 #to set project name##
 project( ascii )
 # to find opencvconfig##
